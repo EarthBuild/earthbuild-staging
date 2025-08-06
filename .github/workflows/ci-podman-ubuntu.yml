@@ -10,7 +10,7 @@ on:
       - '.github/CODEOWNERS'
       - 'LICENSE'
   pull_request:
-    branches: [ main ]
+    branches: [ main, get-ci-working ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -31,6 +31,7 @@ jobs:
 #    needs: check-essential-files
     # allow the job to execute even if check-essential-files is skipped
     if: ${{ !failure() }}
+    permissions: write-all
     uses: ./.github/workflows/build-earthly.yml
     with:
       BUILT_EARTHLY_PATH: "./build/linux/amd64/earthly"
@@ -478,11 +479,11 @@ jobs:
 #      SKIP_JOB: ${{ needs.build-earthly.result != 'success' }}
 #    secrets: inherit
 #
-#  podman-earthly-image-tests:
+#  podman-earthbuild-image-tests:
 #    # TODO: Figure out how to run multiple Podman instances in parallel with different ports for buildkitd
 #    needs: build-earthly
 #    if: ${{ !failure() }}
-#    uses: ./.github/workflows/reusable-earthly-image-tests.yml
+#    uses: ./.github/workflows/reusable-earthbuild-image-tests.yml
 #    with:
 #      BUILT_EARTHLY_PATH: "./build/linux/amd64/earthly"
 #      RUNS_ON: "ubuntu-latest"

@@ -802,7 +802,8 @@ ci-arg-test:
         --output_contains="CI environment"
 
 private-image-test:
-    FROM earthly/private-test:latest
+    # NOTE(jhorsts): I assume any private image is good - use dindtest.
+    FROM ghcr.io/earthbuild/dindtest:alpine-3.22-docker-28.3.0-r0
     RUN --entrypoint echo hello world
 
 gen-dockerfile-test:
@@ -1193,7 +1194,7 @@ push-build:
 
 test-earthly-mirror-was-setup:
     DO +RUN_EARTHLY --verbose=false --earthfile=true.earth --target=+true --post_command="> /tmp/output 2>&1"
-    RUN acbgrep registry-1.docker.io.mirror.corp.earthly.dev /etc/buildkitd.toml
+    RUN acbgrep mirror.gcr.io /etc/buildkitd.toml
 
 build-arg-repeat:
     DO +RUN_EARTHLY --earthfile=build-arg-repeat.earth --target=+build-all-1
