@@ -21,4 +21,6 @@ This `<short-git-sha-in-decimal>` value is encoded as the patch-field (last-fiel
 
 To convert the decimal value back to hex, run the following on your terminal:
 
-    printf '%x\n' 1428389531
+```bash
+printf '%x\n' 1428389531
+```
